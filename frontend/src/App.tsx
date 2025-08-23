@@ -29,8 +29,6 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { v4 as uuidv4 } from "uuid";
-import mammoth from "mammoth";
-import { AIService } from "./services/aiService";
 import axios from "axios";
 
 interface UploadedFile {
@@ -77,7 +75,6 @@ export default function AIDocumentSummarizer() {
   const [noteId, setNoteId] = useState<string | null>(null);
   const [guestId, setGuestId] = useState<string | null>(null);
 
-  const aiService = new AIService();
 
   useEffect(() => {
     let id = localStorage.getItem("guest_id");
@@ -95,7 +92,7 @@ export default function AIDocumentSummarizer() {
   const handleFileUpload = async (file: File) => {
     if (!file) return;
     const noteID = uuidv4();
-    setNoteId((prev) => noteID);
+    setNoteId(() => noteID);
     setUploadedFile({
       name: file.name,
       size: file.size,
